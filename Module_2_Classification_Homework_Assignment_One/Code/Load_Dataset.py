@@ -6,6 +6,12 @@ from dotenv import load_dotenv
 
 import pandas as pd
 
+#This is Used To Access Dataset In Specified File Path
+load_dotenv()
+FILE_PATH=os.getenv('FILE_PATH')
+RESULTS_PATH=os.getenv('RESULTS_PATH')
+
+
 # Returns dataset 
 # Dataset Contains 10 Predictive Attributes; 1 Goal Attribute
 # 10 Predictive Attributes Are In Ordered By (Suit, Card #),(Suit, Card #), etc...
@@ -21,13 +27,21 @@ import pandas as pd
 #      8: Straight flush; straight + flush
 #      9: Royal flush; {Ace, King, Queen, Jack, Ten} + flush
 
-
-def get_dataset():
-    #This is Used To Access Dataset In Specified File Path
-    load_dotenv()
-    FILE_PATH=os.getenv('FILE_PATH')
-    
+# Returns Training Dataset
+def get_train_dataset():
     # Saves Dataset To a Pandas Dataframe
-    dataset= pd.read_csv(FILE_PATH, delimiter='\n')
+    # Set Header To None Since, poker-hand-training-true.data File Does Not Include Header
+    # If Header Not Set To None, The First Row Will Be Counted As The Column Names (Header)
+    train_dataset= pd.read_csv(FILE_PATH+'/poker-hand-training-true.data', header=None)
 
-    return dataset
+    return train_dataset
+
+# Returns Testing Dataset
+def get_test_dataset():
+    test_dataset= pd.read_csv(FILE_PATH+'/poker-hand-testing.data', header=None)
+
+    return test_dataset
+
+# Returns The File Path To Store Results
+def get_results():
+    return RESULTS_PATH
