@@ -14,9 +14,17 @@
 # which is a boosted combination of these 15 perceptron classifiers to the testing data set 
 # to evaluate your final classifier
 
-# You shall record the classification accuracy and compare it in a bar chart with that of the decision tree model 
+# You shall record the classification accuracy and compare it in a bar chart with that of the decpwdsision tree model 
 
 
 import Load_Dataset
+import decision_tree_model
 
-dataset=Load_Dataset.get_dataset()
+train_dataset=Load_Dataset.get_train_dataset()
+test_dataset=Load_Dataset.get_test_dataset()
+filename=Load_Dataset.get_results()+'/Trees/Training_Results.png'
+
+model=decision_tree_model.train_model(train_dataset,filename)
+pred,pred_acc=decision_tree_model.predict_model(model,test_dataset)
+
+print(pred_acc)
