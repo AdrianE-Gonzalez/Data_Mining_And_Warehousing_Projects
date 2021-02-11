@@ -27,6 +27,10 @@ RESULTS_PATH=os.getenv('RESULTS_PATH')
 #      8: Straight flush; straight + flush
 #      9: Royal flush; {Ace, King, Queen, Jack, Ten} + flush
 
+def change_outputs(dataset):
+    dataset.iloc[:,-1:] = dataset.iloc[:,-1:].replace(to_replace=[2,3,4,5,6,7,8,9], value=1)
+    return dataset
+
 # Returns Training Dataset
 def get_train_dataset():
     # Saves Dataset To a Pandas Dataframe
@@ -34,11 +38,13 @@ def get_train_dataset():
     # If Header Not Set To None, The First Row Will Be Counted As The Column Names (Header)
     train_dataset= pd.read_csv(FILE_PATH+'/poker-hand-training-true.data', header=None)
 
+    train_dataset=change_outputs(train_dataset)
     return train_dataset
 
 # Returns Testing Dataset
 def get_test_dataset():
     test_dataset= pd.read_csv(FILE_PATH+'/poker-hand-testing.data', header=None)
+    test_dataset=change_outputs(test_dataset)
 
     return test_dataset
 
